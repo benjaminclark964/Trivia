@@ -2,15 +2,14 @@ language: node_js
 node_js:
 - "14.9.0"
 dist: trusty
-sudo: required
 
 branches:
   only:
   - master
 
-  before-script:
+before-script:
   - npm install
 
-  script:
+script:
   - npm run test-headless
   - ng build --prod
