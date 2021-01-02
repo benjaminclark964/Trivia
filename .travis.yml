@@ -6,6 +6,10 @@ dist: trusty
 branches:
   only:
   - master
+  
+notifications:
+  email: false
+  
 cache:
   directories:
     - ./node_modules
@@ -15,13 +19,16 @@ install:
 
 script:
   - npm run test-headless
+  
+before-deploy:
   - ng build --prod
+  - cp dist/IP3/index.html dist/IP3/404.html
   
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: dist/Trivia
+  local_dir: dist/trivia
   on:
     branch: master
 
