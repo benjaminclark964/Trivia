@@ -22,7 +22,7 @@ script:
   
 before-deploy:
   - ng build --prod
-  - cp dist/IP3/index.html dist/IP3/404.html
+  - cp dist/trivia/index.html dist/trivia/404.html
   
 deploy:
   provider: pages
