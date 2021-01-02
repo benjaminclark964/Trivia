@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "trivia"
+    }
+  },
+  "defaultProject": "trivia",
+  "cli": {
+    "analytics": false
+  }
 }
