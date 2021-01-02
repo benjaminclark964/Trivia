@@ -6,10 +6,22 @@ dist: trusty
 branches:
   only:
   - master
-
-before-script:
+cache:
+  directories:
+    - ./node_modules
+    
+install:
   - npm install
 
 script:
   - npm run test-headless
   - ng build --prod
+  
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/Trivia
+  on:
+    branch: master
+
