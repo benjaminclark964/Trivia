@@ -1,11 +1,36 @@
-.quiz_selector {
-    display:flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 50%;
-    margin-left: 25%;
+#header_wrapper {
+    height:50px;
+    list-style: none;
 
-    .submit_button {
-        margin-top: 3%;
+    #links {
+        display:flex;
+        justify-content: center;
+        flex-direction: row;
+        position: absolute;
+        top:0;
+        right:0;
+        left:0;
+
+        li {
+            padding: 15px;
+            cursor: pointer;
+            
+            a:hover {
+                color: #008080;
+                text-decoration: underline;
+                text-decoration-style: solid;
+                transition: 0.3s;
+            }
+        }
+    }
+}
+
+#footer_wrapper {
+    #copyright {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
     }
 }

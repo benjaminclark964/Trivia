@@ -2,10 +2,15 @@ html {
     background-color: black;
 }
 
-h1, h2, p {
-    color: white;
+h1, h2, p, a {
+    color: #ebebeb;
+    font-family: Arial, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-button {
-    
+a {
+    font-size: 25px;
 }
+
+// button {
+
+// }
