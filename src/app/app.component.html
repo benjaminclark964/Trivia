@@ -3,6 +3,59 @@
     <h1>My Trivia App!</h1>
   </header>
   <body>
+    <div class="quiz_selector">
+      <h2>Number of Questions</h2>
+      <input type="text" value="10">
+
+      <h2>Category</h2>
+      <select name="category" id="category_types">
+        <option value="any_category">Any Category</option>
+        <option value="general_knowledge">General Knowledge</option>
+        <option value="entertainment_books">Entertainment: Books</option>
+        <option value="entertainment_film">Entertainment: Film</option>
+        <option value="entertainment_music">Entertainment: Music</option>
+        <option value="entertainment_musicals_theatres">Entertainment: Musicals & Theatres</option>
+        <option value="entertainment_television">Entertainment: Television</option>
+        <option value="entertainment_video_games">Entertainment: Video Games</option>
+        <option value="entertainment_board_games">Entertainment: Board Games</option>
+        <option value="entertainment_comics">Entertainment: Comics</option>
+        <option value="entertainment_japanese_anime_manga">Entertainment: Japanese Anime & Manga</option>
+        <option value="entertainment_cartoon_animations">Entertainment: Cartoon & Animations</option>
+        <option value="science_nature">Science & Nature</option>
+        <option value="science_computers">Science: Computers</option>
+        <option value="science_mathematics">Science: Mathematics</option>
+        <option value="science_gadgets">Science: Gadgets</option>
+        <option value="mythology">Mythology</option>
+        <option value="sports">Sports</option>
+        <option value="geography">Geography</option>
+        <option value="history">History</option>
+        <option value="politics">Politics</option>
+        <option value="art">Art</option>
+        <option value="celebrities">Celebrities</option>
+        <option value="animals">Animals</option>
+        <option value="vehicles">Vehicles</option>
+      </select>
+
+      <h2>Difficulty</h2>
+      <select name="difficulty" id="select_difficulty">
+        <option value="any">Any Difficulty</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+
+      <h2>Type</h2>
+      <select name="type" id="select_type">
+        <option value="any">Any Type</option>
+        <option value="multiple">Multiple Choice</option>
+        <option value="boolean">True/False</option>
+      </select>
+
+      <div class="submit_button">
+        <button>Submit</button>
+      </div>
+
+    </div>
     <app-quiz></app-quiz>
   </body>
   <footer>
