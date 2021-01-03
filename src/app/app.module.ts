@@ -10,7 +10,7 @@ import { QuizComponent } from './quiz/quiz.component';
     QuizComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
