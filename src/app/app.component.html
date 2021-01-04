@@ -1,16 +1,16 @@
 <html>
   <header>
-    <div id="header_wrapper">
-      <div id="links">
-       
-        <li><a>Home</a></li>
-        <li><a>About</a></li>
-      
-      </div>
-    </div>
+    
   </header>
   <body>
-    <app-quiz></app-quiz>
+    <mat-tab-group mat-align-tabs="center" animationDuration="0ms">
+      <mat-tab label="Home">
+          <app-quiz></app-quiz>
+      </mat-tab>
+      <mat-tab label="About">
+          <app-about></app-about>
+      </mat-tab>
+    </mat-tab-group>
   </body>
   <footer>
     <div id="footer_wrapper">
