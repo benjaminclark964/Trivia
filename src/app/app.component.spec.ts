@@ -1,13 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MatTabsModule } from '@angular/material/tabs';
+
+import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
 import { QuizComponent } from './quiz/quiz.component'
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppComponent, QuizComponent ],
-      imports: [ BrowserModule ]
+      declarations: [ AppComponent, QuizComponent, AboutComponent ],
+      imports: [ BrowserModule, BrowserAnimationsModule, MatTabsModule ]
     }).compileComponents();
   });
 
