@@ -8,4 +8,17 @@
     .submit_button {
         margin-top: 3%;
     }
+
+    .error {
+        h2 {
+            color: red;
+        }
+    }
+}
+
+
+
+.quiz_wrapper {
+    display: flex;
+    justify-content: center;
 }
