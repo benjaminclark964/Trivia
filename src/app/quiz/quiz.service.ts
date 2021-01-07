@@ -8,11 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuizService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+   private http: HttpClient
+    ) { }
 
   //Get quiz from API and return JSON String
   public getData(numQuestions: string, category: string, difficulty: string, type: string): Promise<any> {
-    //need to build url based on provided params (Check out httpParamas)
     const url: string = this.constructURL(numQuestions, category, difficulty, type);
     console.log(url);
     let promise = new Promise((resolve) => {

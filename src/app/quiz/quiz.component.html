@@ -1,9 +1,9 @@
 <html>
     <header></header>
     <body>
-        <div *ngIf="in_quiz == false" class="quiz_selector">
+        <div *ngIf="in_quiz == false && display_results == false" class="quiz_selector">
             <h2>Number of Questions</h2>
-            <div *ngIf="num_questions_flag"class="error">
+            <div *ngIf="num_questions_flag" class="error">
                 <h2>{{num_questions_error}}</h2>
             </div>
             <input type="text" id="num_questions" value="10">
@@ -60,13 +60,30 @@
         <div *ngIf="in_quiz" class="quiz_wrapper">
             <div id="quiz">
                 <div id="questions">
-                    <p>Question {{question_num}}: {{question}}</p>
-                    <div *ngFor="let answer of possible_answers;">
-                       <p> {{answer}} </p>
+                    <p>Question {{question_num}} of {{num_questions}}: {{question}}</p>
+                    <div *ngIf="not_selected_flag" class="error">
+                        <h2>{{select_question_error}}</h2>
+                    </div>
+                    <div *ngFor="let answer of possible_answers; let i = index">
+                        <div id="answer{{i}}">
+                            <p (click)="answer_selected(i)">{{answer}}</p>
+                        </div>
                     </div>
                 </div>
                 <button type="button" (click)="quiz_question()">Next</button>
+                <button type="button" (click)="endQuiz()">End</button>
             </div>
+        </div>
+
+        <div *ngIf="display_results" class="results_wrapper">
+            <div *ngFor="let res of user_answers; let j = index" class="results">
+                <div *ngIf="j != 0">
+                    <p>Question: {{quiz.results[j-1].question}}</p>
+                    <p>Your answer: {{res}}</p>
+                    <p>Correct Answer: {{quiz.results[j-1].correct_answer}}</p>
+                </div>
+            </div>
+            <button type="button" (click)="endQuiz()">Do another quiz!</button>\
         </div>
     </body>
 </html>

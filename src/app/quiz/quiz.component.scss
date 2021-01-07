@@ -16,9 +16,29 @@
     }
 }
 
-
-
 .quiz_wrapper {
     display: flex;
     justify-content: center;
+
+    #answer {
+        width: 60%;
+        height: 25px;
+        background-color: red;
+    }
+
+    #answer:hover {
+        cursor: pointer;
+    }
+}
+
+.results_wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .results {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
 }
