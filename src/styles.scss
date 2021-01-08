@@ -52,6 +52,17 @@ a:hover {
     color: #0394fc;
 }
 
+button {
+    width: 150px;
+    padding: 1%;
+    border-radius: 33px;
+}
+
+button:hover {
+    background-color: #7cc4f8;
+    cursor: pointer;
+}
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

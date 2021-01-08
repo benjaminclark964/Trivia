@@ -39,7 +39,11 @@ export class QuizComponent implements OnInit {
   constructor(private quiz_service: QuizService, private cookie: CookieService) { }
 
   ngOnInit(): void {
-    if(this.cookie.check("user_quiz")) {
+    if(localStorage.getItem("results")) {
+      this.display_results = true;
+      this.getCurrentQuestion();
+    }
+    else if(this.cookie.check("user_quiz")) {
       this.in_quiz = true;
       this.getCurrentQuestion();
     }
@@ -55,7 +59,6 @@ export class QuizComponent implements OnInit {
     // function to verify amount of questions are valid
     if(this.valid_num_questions(num_questions)){
       this.quiz = await this.quiz_service.getData(num_questions, category, difficulty, type);
-      console.log(this.quiz);
       this.in_quiz = true;
       this.num_questions = Number(num_questions);
       this.quiz_question();
@@ -129,7 +132,7 @@ export class QuizComponent implements OnInit {
   private results() {
     this.in_quiz = false;
     this.display_results = true;
-
+    localStorage.setItem("results", "true");
     this.getCurrentQuestion();
 
     
@@ -177,12 +180,14 @@ export class QuizComponent implements OnInit {
   }
 
   public answer_selected(id_index) {
-    if(this.answer_selected_flag) { document.getElementById(`answer${this.answer_index}`).style.backgroundColor = "black"; }
+    if(this.answer_selected_flag) { 
+      document.getElementById(`answer${this.answer_index}`).style.backgroundColor = "#f0f0f0";
+    }
     this.not_selected_flag = false;
 
     let id = `answer${id_index}`;
     document.getElementById(id).style.height = "25px"
-    document.getElementById(id).style.backgroundColor = "yellow";
+    document.getElementById(id).style.backgroundColor = "#7cc4f8";
     document.getElementById(id).style.borderRadius = "33px";
     this.answer_index = id_index;
     this.selected_answer = document.getElementById(id).innerText;
@@ -195,6 +200,7 @@ export class QuizComponent implements OnInit {
     this.quiz = JSON.parse(localStorage.getItem("quiz"));
     this.question_num = JSON.parse(quiz_json).question_num--;
     this.question = JSON.parse(quiz_json).question;
+    this.question = this.question.toString();
     this.possible_answers = JSON.parse(quiz_json).possible_answers;
     this.array_index = JSON.parse(quiz_json).array_index--;
     this.num_questions = JSON.parse(quiz_json).num_questions;

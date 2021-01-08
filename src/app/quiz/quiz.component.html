@@ -57,33 +57,51 @@
             </div>
         </div>
 
-        <div *ngIf="in_quiz" class="quiz_wrapper">
-            <div id="quiz">
-                <div id="questions">
-                    <p>Question {{question_num}} of {{num_questions}}: {{question}}</p>
-                    <div *ngIf="not_selected_flag" class="error">
-                        <h2>{{select_question_error}}</h2>
-                    </div>
-                    <div *ngFor="let answer of possible_answers; let i = index">
-                        <div id="answer{{i}}">
-                            <p (click)="answer_selected(i)">{{answer}}</p>
+        <div class="quiz_block">
+            <div *ngIf="in_quiz" class="quiz_wrapper">
+                <div id="quiz">
+                    <div id="questions">
+                        <p>Question {{question_num}} of {{num_questions}}:</p>
+                        <p [innerHTML]="question"></p>
+                        
+                        <div *ngIf="not_selected_flag" class="error">
+                            <h2>{{select_question_error}}</h2>
+                        </div>
+                        <div *ngFor="let answer of possible_answers; let i = index" id="answer">
+                            <div id="answer{{i}}">
+                                <p (click)="answer_selected(i)">{{answer}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button type="button" (click)="quiz_question()">Next</button>
-                <button type="button" (click)="endQuiz()">End</button>
+                <div id="buttons_wrapper">
+                    <button type="button" (click)="quiz_question()">Next</button>
+                    <button type="button" (click)="endQuiz()">End</button>
+                </div>
             </div>
         </div>
 
         <div *ngIf="display_results" class="results_wrapper">
-            <div *ngFor="let res of user_answers; let j = index" class="results">
-                <div *ngIf="j != 0">
-                    <p>Question: {{quiz.results[j-1].question}}</p>
-                    <p>Your answer: {{res}}</p>
-                    <p>Correct Answer: {{quiz.results[j-1].correct_answer}}</p>
+           
+            <div *ngFor="let res of user_answers; let j = index" class="results_block">
+                <div *ngIf="j != 0" class="results">
+                    <div class="result_question">
+                        <p>Question: </p>
+                        <p [innerHTML]="quiz.results[j-1].question"></p>
+                    </div>
+                    <div class="user_answer">
+                        <p>Your answer: </p>
+                        <p [innerHTML]="res"></p>
+                    </div>
+                    <div class="correct">
+                        <p>Correct Answer: </p>
+                        <p [innerHTML]="quiz.results[j-1].correct_answer"></p>
+                    </div>
                 </div>
             </div>
-            <button type="button" (click)="endQuiz()">Do another quiz!</button>\
+            <div id="results_button">
+                <button type="button" (click)="endQuiz()">Do another quiz!</button>
+            </div>
         </div>
     </body>
 </html>
