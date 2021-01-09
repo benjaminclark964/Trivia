@@ -1,7 +1,9 @@
 <html>
     <header></header>
     <body>
-        <div *ngIf="in_quiz == false && display_results == false" class="quiz_selector">
+
+        <!--View for selecting a quiz-->
+        <div *ngIf="in_quiz == false && display_results == false && loading == false" class="quiz_selector">
             <h2>Number of Questions</h2>
             <div *ngIf="num_questions_flag" class="error">
                 <h2>{{num_questions_error}}</h2>
@@ -57,6 +59,12 @@
             </div>
         </div>
 
+        <!--Loading screen-->
+        <div *ngIf="loading" id="loading">
+            <div class="spinner"></div>
+        </div>
+
+        <!--View for Quiz-->
         <div class="quiz_block">
             <div *ngIf="in_quiz" class="quiz_wrapper">
                 <div id="quiz">
@@ -69,7 +77,7 @@
                         </div>
                         <div *ngFor="let answer of possible_answers; let i = index" id="answer">
                             <div id="answer{{i}}">
-                                <p (click)="answer_selected(i)">{{answer}}</p>
+                                <p (click)="answer_selected(i)" [innerHTML]="answer"></p>
                             </div>
                         </div>
                     </div>
@@ -81,8 +89,12 @@
             </div>
         </div>
 
+        <!--View for results-->
         <div *ngIf="display_results" class="results_wrapper">
-           
+            <div id="correct_results">
+                <p>{{amountCorrect}}/{{num_questions}} Correct</p>
+            </div>
+            
             <div *ngFor="let res of user_answers; let j = index" class="results_block">
                 <div *ngIf="j != 0" class="results">
                     <div class="result_question">

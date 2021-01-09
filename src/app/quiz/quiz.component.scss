@@ -35,7 +35,7 @@
             margin-bottom: 2%;
             button {
                 width: 150px;
-                padding: 1%;
+                padding: 8px;
                 border-radius: 33px;
             }
 
@@ -73,6 +73,11 @@
 .results_wrapper {
     width: 100%;
 
+    #correct_results {
+        color: white; 
+        text-align: center;
+    }
+
     .results_block {
         background-color: #f0f0f0;
         margin-left: 25%;
@@ -89,26 +94,62 @@
             display: flex;
             justify-content: center;
             flex-direction: column;
+            flex-wrap: wrap;
 
             .result_question {
                 display: flex;
                 flex-direction: row;
+                flex-wrap: wrap;
             }
 
             .user_answer {
                 display: flex;
                 flex-direction: row;
+                flex-wrap: wrap;
             }
 
             .correct {
                 display: flex;
                 flex-direction: row;
+                flex-wrap: wrap;
             }
         }
     }
 
     #results_button {
         text-align: center;
+        margin-bottom: 10%;
+    }
+}
+
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    100% {
+         transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}
+.spinner {
+    // The height here is just for demo purposes
+    height: 50vh;
+    opacity: 1;
+    position: relative;
+    transition: opacity linear 0.1s;        &::before {
+        animation: 2s linear infinite spinner;
+        border: solid 3px #eee;
+        border-bottom-color: #EF6565;
+        border-radius: 50%;
+        content: "";
+        height: 100px;
+        left: 50%;
+        opacity: inherit;
+        position: absolute;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        transform-origin: center;
+        width: 100px;
+        will-change: transform;
     }
 }
 
@@ -116,4 +157,14 @@
     h2 {
         color: red;
     }
+}
+
+//mobile devices
+@media(max-width:700px) {
+    .results_wrapper {
+        .results_block {
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+    }  
 }

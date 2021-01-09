@@ -17,6 +17,7 @@ export class QuizComponent implements OnInit {
   public display_results: Boolean = false;
   public answer_selected_flag: Boolean = false;
   public not_selected_flag: Boolean = false;
+  public loading: Boolean = false;
 
   //Error Messages
   public num_questions_error: string = "Error: must choose a number between 0 and 51";
@@ -32,6 +33,8 @@ export class QuizComponent implements OnInit {
   private num_questions = 0;
   private answer_index = 0;
   private selected_answer: string;
+  public amountCorrect: number = 0;
+  private token: string;
 
   //quiz
   private quiz: JSON;
@@ -41,7 +44,7 @@ export class QuizComponent implements OnInit {
   ngOnInit(): void {
     if(localStorage.getItem("results")) {
       this.display_results = true;
-      this.getCurrentQuestion();
+      this.results();
     }
     else if(this.cookie.check("user_quiz")) {
       this.in_quiz = true;
@@ -58,12 +61,27 @@ export class QuizComponent implements OnInit {
 
     // function to verify amount of questions are valid
     if(this.valid_num_questions(num_questions)){
-      this.quiz = await this.quiz_service.getData(num_questions, category, difficulty, type);
+      this.loading = true;
+      
+      if(this.cookie.get("token")) { 
+        this.token = this.cookie.get("token");
+      } else {
+        let token_reponse = await this.quiz_service.getToken();
+        this.token = token_reponse.token;
+        this.createTokenCookie();
+      }
+
+      this.quiz = await this.quiz_service.getData(num_questions, category, difficulty, type, this.token);
+      this.loading = false;
       this.in_quiz = true;
       this.num_questions = Number(num_questions);
       this.quiz_question();
     }
     return;
+  }
+
+  private createTokenCookie() {
+    this.cookie.set("token", this.token, 0.6);
   }
 
   //Ends quiz for the user
@@ -75,6 +93,7 @@ export class QuizComponent implements OnInit {
     this.array_index = 0;
     this.question_num = 1;
     this.user_answers = [""];
+    this.amountCorrect = 0;
   }
 
   //Validate user input for number of questions as valid
@@ -119,7 +138,6 @@ export class QuizComponent implements OnInit {
         return;
       }
       this.user_answers[this.array_index] = this.selected_answer;
-      console.log(this.user_answers);
       this.question = quiz.results[this.array_index].question;
       this.possible_answers = quiz.results[this.array_index].incorrect_answers;
       this.possible_answers.push(quiz.results[this.array_index].correct_answer);
@@ -129,13 +147,22 @@ export class QuizComponent implements OnInit {
   }
 
   //display results to the user
-  private results() {
+  private results(): void {
     this.in_quiz = false;
     this.display_results = true;
     localStorage.setItem("results", "true");
     this.getCurrentQuestion();
+    this.getAmountCorrect(this.quiz);
+  }
 
-    
+  private getAmountCorrect(quiz): void {
+    console.log(quiz);
+    console.log(this.user_answers);
+    for(let i = 0; i < this.num_questions; i++) {
+      if(quiz.results[i].correct_answer === this.user_answers[i+1]) {
+        this.amountCorrect++;
+      }
+    }
   }
 
   //shuffle array of answers
