@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  API: {
+    url: "https://opentdb.com/api.php?",   
+  },
 };
