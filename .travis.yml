@@ -19,16 +19,3 @@ install:
 
 script:
   - npm run test-headless
-  
-before-deploy:
-  - ng build --prod
-  - cp dist/trivia/index.html dist/trivia/404.html
-  
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: dist/trivia
-  on:
-    branch: master
-
