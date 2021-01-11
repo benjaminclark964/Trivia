@@ -70,7 +70,7 @@
                 <div id="quiz">
                     <div id="questions">
                         <p>Question {{question_num}} of {{num_questions}}:</p>
-                        <p [innerHTML]="question"></p>
+                        <p [innerHTML]="question" id="ques"></p>
                         
                         <div *ngIf="not_selected_flag" class="error">
                             <h2>{{select_question_error}}</h2>

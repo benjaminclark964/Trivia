@@ -25,9 +25,10 @@ export class QuizComponent implements OnInit {
 
   //User Variables
   public question_num: number;
-  public question: string;
+  public question;
   public possible_answers: [string];
   private user_answers: [string] = [""];
+  private user_answers_index: [string] = [""];
   public correct_answer: string;
   private array_index: number = 0;
   private num_questions = 0;
@@ -35,6 +36,7 @@ export class QuizComponent implements OnInit {
   private selected_answer: string;
   public amountCorrect: number = 0;
   private token: string;
+  public quiz_correct_answers: [string] = [""];
 
   //quiz
   private quiz: JSON;
@@ -81,7 +83,7 @@ export class QuizComponent implements OnInit {
   }
 
   private createTokenCookie() {
-    this.cookie.set("token", this.token, 0.6);
+    this.cookie.set("token", this.token, 0.4);
   }
 
   //Ends quiz for the user
@@ -93,6 +95,8 @@ export class QuizComponent implements OnInit {
     this.array_index = 0;
     this.question_num = 1;
     this.user_answers = [""];
+    this.user_answers_index = [""];
+    this.quiz_correct_answers = [""];
     this.amountCorrect = 0;
   }
 
@@ -123,6 +127,8 @@ export class QuizComponent implements OnInit {
       this.possible_answers = JSON.parse(quiz_json).possible_answers;
       this.array_index = JSON.parse(quiz_json).array_index;
       this.user_answers = JSON.parse(localStorage.getItem("user_answers"));
+      this.user_answers_index = JSON.parse(localStorage.getItem("user_answers_index"));
+      this.quiz_correct_answers = JSON.parse(localStorage.getItem("quiz_correct_answers"));
       this.update_quiz(this.quiz);
     } else {
       this.update_quiz(this.quiz);
@@ -133,17 +139,32 @@ export class QuizComponent implements OnInit {
       this.question_num = this.array_index + 1;
       if(this.question_num == this.num_questions+1) { 
         this.user_answers[this.array_index] = this.selected_answer;
+        this.user_answers_index[this.array_index] = this.answer_index.toString();
         localStorage.setItem("user_answers", JSON.stringify(this.user_answers));
+        localStorage.setItem("user_answers_index", JSON.stringify(this.user_answers_index));
+        localStorage.setItem("quiz_correct_answers", JSON.stringify(this.quiz_correct_answers));
         this.results();
         return;
       }
       this.user_answers[this.array_index] = this.selected_answer;
+      this.user_answers_index[this.array_index] = this.answer_index.toString();
       this.question = quiz.results[this.array_index].question;
       this.possible_answers = quiz.results[this.array_index].incorrect_answers;
       this.possible_answers.push(quiz.results[this.array_index].correct_answer);
       this.shuffle_answers();
+      this.storeCorrectAnwerIndex(quiz);
       this.array_index++;
       this.createLocalStorage();
+  }
+
+  private storeCorrectAnwerIndex(quiz) {
+    //put correct answer index into array
+    for(let i = 0; i < this.possible_answers.length; i++) {
+      if(this.possible_answers[i] === quiz.results[this.array_index].correct_answer) {
+        this.quiz_correct_answers[this.array_index] = i.toString();
+        break;
+      }
+    }
   }
 
   //display results to the user
@@ -156,10 +177,8 @@ export class QuizComponent implements OnInit {
   }
 
   private getAmountCorrect(quiz): void {
-    console.log(quiz);
-    console.log(this.user_answers);
     for(let i = 0; i < this.num_questions; i++) {
-      if(quiz.results[i].correct_answer === this.user_answers[i+1]) {
+      if(this.quiz_correct_answers[i] == this.user_answers_index[i+1]) {
         this.amountCorrect++;
       }
     }
@@ -196,14 +215,15 @@ export class QuizComponent implements OnInit {
       {Field: "array_index", Value: this.array_index},
     ];
 
-    let q = JSON.stringify(this.quiz);
-    localStorage.setItem("quiz", q);
-    localStorage.setItem("user_answers", JSON.stringify(this.user_answers));
-
     let quiz_object = {};
     values.forEach(items => quiz_object[items.Field] = items.Value);
     let json = JSON.stringify(quiz_object);
     this.cookie.set("user_quiz", json, 1);
+
+    localStorage.setItem("quiz", JSON.stringify(this.quiz));
+    localStorage.setItem("user_answers", JSON.stringify(this.user_answers));
+    localStorage.setItem("user_answers_index", JSON.stringify(this.user_answers_index));
+    localStorage.setItem("quiz_correct_answers", JSON.stringify(this.quiz_correct_answers));
   }
 
   public answer_selected(id_index) {
@@ -232,6 +252,8 @@ export class QuizComponent implements OnInit {
     this.array_index = JSON.parse(quiz_json).array_index--;
     this.num_questions = JSON.parse(quiz_json).num_questions;
     this.user_answers = JSON.parse(localStorage.getItem("user_answers"));
+    this.user_answers_index = JSON.parse(localStorage.getItem("user_answers_index"));
+    this.quiz_correct_answers = JSON.parse(localStorage.getItem("quiz_correct_answers"));
   }
 
 }
