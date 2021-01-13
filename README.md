@@ -25,3 +25,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+# Building with Docker
+
+Assuming Docker is installed correctly run these commands to build the docker image and host it locally.
+
+Run `docker build -t trivia-app-image .` to build the docker image
+
+Run `docker run --name trivia-app-container -d -p 8888:80 trivia-app-image` to build and host the container on port 8888
+
+
